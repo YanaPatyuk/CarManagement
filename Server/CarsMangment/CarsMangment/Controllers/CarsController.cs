@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 //https://mysqlconnector.net/tutorials/net-core-mvc/
 namespace CarsMangment.Controllers
 {
+    [ApiController]
     [Route("api/[controller]")]
     public class CarsController : ControllerBase
     {
@@ -19,27 +20,93 @@ namespace CarsMangment.Controllers
         {
             Db = db;
         }
+        // GET api/cars/Types
+        [HttpGet("Types")]
+        public async Task<IActionResult> GetAllCarTypes()
+        {
+            Console.WriteLine("Controller: Get all car types");
+            await Db.Connection.OpenAsync();
+            var query = new DatabaseQuery(Db);
+            var result = await query.AllCarTypes();
 
+            return new OkObjectResult(result);
+        }
+        // GET api/cars/Employees
+        [HttpGet("Employees")]
+        public async Task<IActionResult> GetAllEmployees()
+        {
+            Console.WriteLine("Controller: Get all emploees");
+            await Db.Connection.OpenAsync();
+            var query = new DatabaseQuery(Db);
+            var result = await query.AllEmployees();
+            return new OkObjectResult(result);
+        }
         // GET api/cars
         [HttpGet]
         public async Task<IActionResult> GetAllCars()
         {
+            Console.WriteLine("Controller: Get all cars");
             await Db.Connection.OpenAsync();
             var query = new DatabaseQuery(Db);
             var result = await query.AllCarsAsync();
             return new OkObjectResult(result);
         }
 
-        // GET api/cars/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetOneCar(int id)
+        // GET api/cars/AZ123
+        [HttpGet("{license_plate}")]
+        public async Task<IActionResult> GetOneCar(string license_plate)
         {
+            Console.WriteLine("Controller: Get one car:" + license_plate);
             await Db.Connection.OpenAsync();
             var query = new DatabaseQuery(Db);
-            var result = await query.FindOneAsync(id);
+            var result = await query.FindOneCarAsync(license_plate);
             if (result is null)
                 return new NotFoundResult();
             return new OkObjectResult(result);
         }
+
+        // POST api/cars/AddCar
+        [HttpPost("AddCar")]
+        public async Task<IActionResult> AddCar([FromBody] Car body)
+        {
+            Console.WriteLine("Controller: Post add new car");
+            await Db.Connection.OpenAsync();
+            body.Db = Db;
+            await body.InsertAsync();
+            return new OkObjectResult(body);
+        }
+
+        // PUT api/cars/5
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCar(int id, [FromBody] Car body)
+        {
+            Console.WriteLine("Controller: Update car with id:"+ id);
+            await Db.Connection.OpenAsync();
+            var query = new DatabaseQuery(Db);
+            var result = await query.FindOneCarAsync(id);
+            if (result is null)
+                return new NotFoundResult();
+            result.Copy(body);
+            await result.UpdateAsync();
+            return new OkObjectResult(result);
+        }
+
+        // DELETE api/cars/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteOneCar(int id)
+        {
+            Console.WriteLine("Controller: Delete car with id:" + id);
+            await Db.Connection.OpenAsync();
+            var query = new DatabaseQuery(Db);
+            var result = await query.FindOneCarAsync(id);
+            if (result is null)
+                return new NotFoundResult();
+            result.Db = Db;
+            await result.DeleteAsync();
+            return new OkResult();
+        }
+
+
+
     }
 }

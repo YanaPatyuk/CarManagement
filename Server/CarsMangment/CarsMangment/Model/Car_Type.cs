@@ -9,6 +9,6 @@ namespace CarsMangment.Model
     {
         public int ID { get; set; }
 
-        public string type_name { get; set; }
+        public string Type_name { get; set; }
     }
 }

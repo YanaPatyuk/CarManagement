@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace CarsMangment.Model
 {
-    public class Car
+    public class Car : BaseCar
     {
         public int Id { get; set; }
-        public string License_plate { get; set; }
-        public int Car_type { get; set; }
-        public bool Fourdb {  get;set;}
-        public int ?Engine_capacity { get; set; }
         public int Manufacture_year { get; set; }
         public string ?Notes { get; set; }
-        public int ?Employee { get; set; }
         public DateTime Car_care_date { get; set; }
         public DateTime Edit_date { get; set; }
 
@@ -31,6 +26,20 @@ namespace CarsMangment.Model
         internal Car(Database db)
         {
             Db = db;
+        }
+
+        public void Copy(Car other)
+        {
+            this.Id = other.Id;
+            this.License_plate = other.License_plate;
+            this.Car_type = other.Car_type;
+            this.Fourdb = other.Fourdb;
+            this.Engine_capacity = other.Engine_capacity;
+            this.Manufacture_year = other.Manufacture_year;
+            this.Notes = other.Notes;
+            this.Employee = other.Employee;
+            this.Car_care_date = other.Car_care_date;
+            this.Edit_date = other.Edit_date;
         }
 
 
