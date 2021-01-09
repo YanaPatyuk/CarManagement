@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "dgSpecHash": "E2Xg+AHxpqDmVbOZGRGFEQGHgzBU2Dc1dlPd5zXCMdqGOz1IDM7FF+lWOK1cYvtvTE6NnJ+9edJdpXuxp/OFfw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\YanaP\\Desktop\\jobs\\Taldor\\CarManagement\\Server\\CarsMangment\\CarsMangment\\CarsMangment.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\YanaP\\.nuget\\packages\\mysql.data.entity\\6.10.9\\mysql.data.entity.6.10.9.nupkg.sha512",
+    "C:\\Users\\YanaP\\.nuget\\packages\\mysqlconnector\\1.2.1\\mysqlconnector.1.2.1.nupkg.sha512"
+  ],
+  "logs": [
+    {
+      "code": "NU1701",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Package 'MySql.Data.Entity 6.10.9' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v3.1'. This package may not be fully compatible with your project.",
+      "libraryId": "MySql.Data.Entity",
+      "targetGraphs": [
+        ".NETCoreApp,Version=v3.1"
+      ]
+    }
+  ]
+}
