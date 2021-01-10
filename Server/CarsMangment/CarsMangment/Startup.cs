@@ -28,6 +28,11 @@ namespace CarsMangment
         {
             services.AddTransient<Database>(_ => new Database(Configuration["ConnectionStrings:DefaultConnection"]));
             services.AddControllers();
+            services.AddCors(options => options.AddPolicy("ApiCorsPolicy", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader();
+            }));
+            services.AddMvc();
 
 
         }
@@ -44,12 +49,19 @@ namespace CarsMangment
 
             app.UseRouting();
 
+            app.UseCors(builder => builder
+    .AllowAnyOrigin()
+    .AllowAnyMethod()
+    .AllowAnyHeader());
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
+
+            // Make sure you call this before calling app.UseMvc()
         }
     }
 }

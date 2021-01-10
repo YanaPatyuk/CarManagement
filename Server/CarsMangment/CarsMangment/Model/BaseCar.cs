@@ -8,9 +8,9 @@ namespace CarsMangment.Model
     public class BaseCar
     {
         public string License_plate { get; set; }
-        public int Car_type { get; set; }
+        public string Car_type { get; set; }
         public bool Fourdb { get; set; }
         public int? Engine_capacity { get; set; }
-        public int? Employee { get; set; }
+        public string? Employee { get; set; }
     }
 }

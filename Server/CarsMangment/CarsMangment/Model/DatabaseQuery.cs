@@ -86,10 +86,10 @@ namespace CarsMangment.Model
                     var post = new BaseCar()
                     {
                         License_plate = reader.GetString(0),
-                        Car_type = reader.GetInt32(1),
+                        Car_type = reader.GetString(1),
                         Fourdb = reader.GetBoolean(2),
                         Engine_capacity = reader.GetInt32(3),
-                        Employee = reader.GetInt32(4)
+                        Employee = reader.GetString(4)
                     };
                     posts.Add(post);
                 }

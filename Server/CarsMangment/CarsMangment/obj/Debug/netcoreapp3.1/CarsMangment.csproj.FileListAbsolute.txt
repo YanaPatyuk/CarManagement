@@ -19,5 +19,11 @@ C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangmen
 C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\obj\Debug\netcoreapp3.1\CarsMangment.pdb
 C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\obj\Debug\netcoreapp3.1\CarsMangment.genruntimeconfig.cache
 C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\MySqlConnector.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\System.Web.Cors.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\System.Net.Http.Formatting.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\System.Web.Http.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\System.Web.Http.Cors.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
 C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\obj\Debug\netcoreapp3.1\CarsMangment.csproj.CoreCompileInputs.cache
 C:\Users\YanaP\Desktop\jobs\Taldor\CarManagement\Server\CarsMangment\CarsMangment\obj\Debug\netcoreapp3.1\CarsMangment.MvcApplicationPartsAssemblyInfo.cache

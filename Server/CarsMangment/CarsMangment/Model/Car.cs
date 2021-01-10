@@ -14,6 +14,9 @@ namespace CarsMangment.Model
         public string ?Notes { get; set; }
         public DateTime Car_care_date { get; set; }
         public DateTime Edit_date { get; set; }
+        public int car_type_id { get; set; }
+        public int car_employee_id { get; set; }
+
 
         //datebase connection
         internal Database Db { get; set; }
@@ -40,6 +43,8 @@ namespace CarsMangment.Model
             this.Employee = other.Employee;
             this.Car_care_date = other.Car_care_date;
             this.Edit_date = other.Edit_date;
+            this.car_employee_id = other.car_employee_id;
+            this.car_type_id = other.car_type_id;
         }
 
 
@@ -93,7 +98,7 @@ namespace CarsMangment.Model
             {
                 ParameterName = "@car_type",
                 DbType = DbType.Int16,
-                Value = Car_type,
+                Value = car_type_id,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
@@ -123,7 +128,7 @@ namespace CarsMangment.Model
             {
                 ParameterName = "@employee",
                 DbType = DbType.Int16,
-                Value = Employee,
+                Value = car_employee_id,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
