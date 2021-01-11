@@ -11,9 +11,9 @@ const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'cars', component: CarsComponent},
   { path: 'add-car', component: AddCarComponent},
-  { path: 'update-car/{id}', component: UpdateCarComponent},
-  { path: 'delete-car/{id}', component: DeleteCarComponent},
-  { path: 'show-car/{licence_plate}', component: ShowCarComponent}
+  { path: 'update-car/:id', component: UpdateCarComponent},
+  { path: 'delete-car/:id', component: DeleteCarComponent},
+  { path: 'show-car/:licencePlate', component: ShowCarComponent}
 ];
 
 

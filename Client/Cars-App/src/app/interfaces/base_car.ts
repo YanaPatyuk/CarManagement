@@ -1,13 +1,15 @@
 export interface Base_car 
 {
-    License_plate: string;
+    licensePlate: string;
 
-    Car_type: number;
+    carType: number;
 
-    Fourdb: boolean;
+    fourdb: boolean;
 
-    Engine_capacity?: number;
+    engineCapacity?: number;
 
-    Employee?: number;
+    employeeFirstName?: string;
+    employeeLastName?: string;
+
 
 }

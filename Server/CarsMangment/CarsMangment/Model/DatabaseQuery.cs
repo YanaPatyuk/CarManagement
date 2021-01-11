@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using CarsMangment.Const;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -21,7 +22,7 @@ namespace CarsMangment.Model
         public async Task<List<Car_Type>> AllCarTypes()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM `carsdb`.`car_type`;";
+            cmd.CommandText = SqlQuerys.GetAllCarTypes;
             return await ReadAllAllCarTypesAsyn(await cmd.ExecuteReaderAsync());
         }
 
@@ -46,7 +47,7 @@ namespace CarsMangment.Model
         public async Task<List<Employee>> AllEmployees()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM `carsdb`.`employee`;";
+            cmd.CommandText = SqlQuerys.GetAllEmployees;
             return await ReadAllAllEmployeesAsyn(await cmd.ExecuteReaderAsync());
         }
 
@@ -72,7 +73,7 @@ namespace CarsMangment.Model
         public async Task<List<BaseCar>> AllCarsAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT  license_plate,car_type,fourdb,Engine_capacity,employee FROM `carsdb`.`car`;";
+            cmd.CommandText = SqlQuerys.GetAllCarsBaseInfo;
             return await ReadBaseCarsAsync(await cmd.ExecuteReaderAsync());
         }
 
@@ -85,11 +86,12 @@ namespace CarsMangment.Model
                 {
                     var post = new BaseCar()
                     {
-                        License_plate = reader.GetString(0),
-                        Car_type = reader.GetString(1),
-                        Fourdb = reader.GetBoolean(2),
-                        Engine_capacity = reader.GetInt32(3),
-                        Employee = reader.GetString(4)
+                        LicensePlate = reader.GetString(0),
+                        CarType = reader.GetString(1),
+                        EngineCapacity = reader.GetInt32(2),
+                        Fourdb = reader.GetBoolean(3),
+                        EmployeeFirstName = reader.GetString(4),
+                        EmployeeLastName = reader.GetString(5)
                     };
                     posts.Add(post);
                 }
@@ -100,7 +102,7 @@ namespace CarsMangment.Model
         public async Task<Car> FindOneCarAsync(string license_plate)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM `carsdb`.`car` WHERE `license_plate` = @license_plate";
+            cmd.CommandText = SqlQuerys.GetFullCarInfoByLicense;
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@license_plate",
@@ -114,7 +116,7 @@ namespace CarsMangment.Model
         public async Task<Car> FindOneCarAsync(int id)
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"SELECT * FROM `carsdb`.`car` WHERE `id` = @id";
+            cmd.CommandText = SqlQuerys.GetFullCarInfoById;
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@id",
@@ -137,15 +139,18 @@ namespace CarsMangment.Model
                     var post = new Car(Db)
                     {
                         Id = reader.GetInt32(0),
-                        License_plate = reader.GetString(1),
-                        Car_type = reader.GetInt32(2),
-                        Fourdb = reader.GetBoolean(3),
-                        Engine_capacity = reader.GetInt32(4),
-                        Manufacture_year = reader.GetInt32(5),
-                        Notes = reader.GetString(6),
-                        Employee = reader.GetInt32(7),
-                        Car_care_date = reader.GetDateTime(8),
-                        Edit_date = reader.GetDateTime(9)
+                        LicensePlate = reader.GetString(1),
+                        Fourdb = reader.GetBoolean(2),
+                        EngineCapacity = reader.GetInt32(3),
+                        ManufactureYear = reader.GetInt32(4),
+                        Notes = reader.GetString(5),
+                        CarCareDate = reader.GetDateTime(6),
+                        EditDate = reader.GetDateTime(7),
+                        carEmployeeId = reader.GetInt32(8),
+                        EmployeeFirstName = reader.GetString(9),
+                        EmployeeLastName = reader.GetString(10),
+                        carTypeId = reader.GetInt32(11),
+                        CarType = reader.GetString(12),
                     };
                     posts.Add(post);
                 }

@@ -1,5 +1,5 @@
 export interface Car_type
 {
-    ID: number;
-    Type_name : string;
+    iD: number;
+    type_name : string;
 }

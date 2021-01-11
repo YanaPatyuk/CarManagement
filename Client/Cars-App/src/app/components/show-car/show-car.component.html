@@ -1,1 +1,23 @@
 <p>show-car works!</p>
+
+<div class="car-details">
+    <div class="card-body" *ngIf="car">
+        <h5 class="card-title">{{car.licensePlate}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">ID:{{ car.id}}</h6>
+        <p></p>
+        <ul>
+            <li></li>
+            <li>manufactureYear : {{car.manufactureYear}}</li>
+            <li>notes: {{car.notes}}</li>
+            <li>Care date: {{car.carDareDate}}</li>
+            <li>last edit date: {{car.carEditDate}}</li>
+            <li>car type: {{car.carType}}</li>
+            <li>4x4: {{car.fourdb}}</li>
+            <li>engineCapacity : {{car.engineCapacity}}</li>
+            <li>Employee: {{car.employeeFirstName + " " + car.employeeLastName}}</li>
+        </ul>
+        <a [routerLink]="['/cars']" class="card-link">Back</a>
+        <a [routerLink]="['/update-car',car.id]" class="card-link">Update</a>
+
+    </div>
+</div>

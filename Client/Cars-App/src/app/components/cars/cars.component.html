@@ -1,26 +1,92 @@
 <p>cars works!</p>
 <h1>Cars List</h1>
+
+
+<mat-form-field >
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search what you need..." #input>
+  </mat-form-field>
+  <div *ngIf="cars">
+    <mat-table multiTemplateDataRows mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+  
+      <!-- License_plate Column -->
+      <ng-container matColumnDef="licensePlate">
+        <mat-header-cell *matHeaderCellDef fxFlex="50">  License Plate </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="50">
+          <span class="ellipsis">{{element.licensePlate}}</span>
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Car_type Column -->
+      <ng-container matColumnDef="carType">
+        <mat-header-cell *matHeaderCellDef > Car Type </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.carType}} </mat-cell>
+      </ng-container>
+  
+      <!-- Fourdb Column -->
+      <ng-container matColumnDef="fourdb">
+        <mat-header-cell *matHeaderCellDef fxFlex="50"> 4X4 </mat-header-cell>
+        <mat-cell *matCellDef="let element" fxFlex="50">
+            {{element.fourdb}}
+        </mat-cell>
+      </ng-container>
+  
+      <!-- Engine_capacity Column -->
+      <ng-container matColumnDef="engineCapacity">
+        <mat-header-cell class="w-20" *matHeaderCellDef> Engine Capacity </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            {{element.engineCapacity}}
+        </mat-cell>
+      </ng-container>
+  
+  
+  
+      <!-- Employee Column -->
+      <ng-container matColumnDef="employee">
+        <mat-header-cell *matHeaderCellDef> Employee </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="actionCol"> {{element.employeeFirstName + " " + element.employeeLastName}} </mat-cell>
+      </ng-container>
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+        <mat-cell *matCellDef="let element" class="actionCol"> 
+            <button class="button" class="btn btn-default btn-sm" (click)="showCar(element.licensePlate)">Show</button>
+             </mat-cell>
+      </ng-container>
+      
+  
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row >
+        <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator *ngIf="dataSource" [pageSizeOptions]="[3, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+
+
+<!---
 <p *ngIf="!cars">Loading list...</p>
 
 <table class="table table-striped" *ngIf="cars">
     <thead>
         <tr>
-            <th>License_plate</th>
-            <th>Car_type</th>
-            <th>Fourdb</th>
-            <th>Engine_capacity</th>
+            <th>License plate</th>
+            <th>Car Type</th>
+            <th>4X4</th>
+            <th>Engine capacity</th>
             <th>Employee</th>
             <th>Actions</th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let car of cars">
-            <td>{{car.License_plate}}</td>
-            <td>{{car.Car_type}}</td>
-            <td>{{car.Fourdb ? "Yes" : "No"}}</td>
-            <td>{{car.Engine_capacity? car.Engine_capacity: "Unknown"}}</td>
-            <td>{{car.Employee? "Occupied": "Free"}}</td>
+            <td>{{car.licensePlate}}</td>
+            <td>{{car.carType}}</td>
+            <td>{{car.fourdb }}</td>
+            <td>{{car.engineCapacity}}</td>
+            <td>{{car.employeeFirstName + " " + car.employeeLastName }}</td>
             <td>Actions</td>
         </tr>
     </tbody>
-</table>
+</table-->

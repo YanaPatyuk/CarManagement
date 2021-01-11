@@ -7,10 +7,11 @@ namespace CarsMangment.Model
 {
     public class BaseCar
     {
-        public string License_plate { get; set; }
-        public string Car_type { get; set; }
+        public string LicensePlate { get; set; }
+        public string CarType { get; set; }
         public bool Fourdb { get; set; }
-        public int? Engine_capacity { get; set; }
-        public string? Employee { get; set; }
+        public int? EngineCapacity { get; set; }
+        public string? EmployeeFirstName { get; set; }
+        public string? EmployeeLastName { get; set; }
     }
 }

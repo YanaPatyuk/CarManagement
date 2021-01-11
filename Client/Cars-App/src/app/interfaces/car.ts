@@ -3,14 +3,18 @@ import { Base_car } from "./base_car";
 export interface Car extends  Base_car 
 {
 
-    Id: number;
+    id?: number;
 
-    Manufacture_year: number;
+    manufactureYear: number;
 
-    Notes?: Date;
+    notes?: Date;
 
-    Car_care_date: number;
+    carDareDate: number;
 
-    Edit_date: Date;
+    editDate: Date;
+
+    carTypeId : number;
+
+    carEmployeeId : number;
 
 }

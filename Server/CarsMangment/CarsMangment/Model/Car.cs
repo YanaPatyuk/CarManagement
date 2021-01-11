@@ -1,4 +1,5 @@
-﻿using MySqlConnector;
+﻿using CarsMangment.Const;
+using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,13 +10,13 @@ namespace CarsMangment.Model
 {
     public class Car : BaseCar
     {
-        public int Id { get; set; }
-        public int Manufacture_year { get; set; }
+        public int ?Id { get; set; }
+        public int ManufactureYear { get; set; }
         public string ?Notes { get; set; }
-        public DateTime Car_care_date { get; set; }
-        public DateTime Edit_date { get; set; }
-        public int car_type_id { get; set; }
-        public int car_employee_id { get; set; }
+        public DateTime CarCareDate { get; set; }
+        public DateTime EditDate { get; set; }
+        public int ?carTypeId { get; set; }
+        public int ?carEmployeeId { get; set; }
 
 
         //datebase connection
@@ -34,17 +35,18 @@ namespace CarsMangment.Model
         public void Copy(Car other)
         {
             this.Id = other.Id;
-            this.License_plate = other.License_plate;
-            this.Car_type = other.Car_type;
+            this.LicensePlate = other.LicensePlate;
+            this.CarType = other.CarType;
             this.Fourdb = other.Fourdb;
-            this.Engine_capacity = other.Engine_capacity;
-            this.Manufacture_year = other.Manufacture_year;
+            this.EngineCapacity = other.EngineCapacity;
+            this.ManufactureYear = other.ManufactureYear;
             this.Notes = other.Notes;
-            this.Employee = other.Employee;
-            this.Car_care_date = other.Car_care_date;
-            this.Edit_date = other.Edit_date;
-            this.car_employee_id = other.car_employee_id;
-            this.car_type_id = other.car_type_id;
+            this.EmployeeFirstName = other.EmployeeFirstName;
+            this.EmployeeLastName = other.EmployeeLastName;
+            this.CarCareDate = other.CarCareDate;
+            this.EditDate = other.EditDate;
+            this.carEmployeeId = other.carEmployeeId;
+            this.carTypeId = other.carTypeId;
         }
 
 
@@ -52,25 +54,33 @@ namespace CarsMangment.Model
         public async Task InsertAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"INSERT INTO `carsdb`.`car` (`license_plate`,`car_type`,`fourdb`,`engine_capacity`,`manufacture_year`,`notes`,`employee`,`car_care_date`,`edit_date`) VALUES (@license_plate ,@car_type ,@fourdb ,@engine_capacity ,@manufacture_year ,@notes ,@employee ,@car_care_date ,@edit_date );";
+            cmd.CommandText = SqlQuerys.InsertNewCar;
             BindParams(cmd);
             await cmd.ExecuteNonQueryAsync();
             Id = (int)cmd.LastInsertedId;
+            //add car type to car type table
+            cmd.CommandText = SqlQuerys.InsertNewCarType;
+            BindTypeParam(cmd);
+            await cmd.ExecuteNonQueryAsync();
         }
 
         public async Task UpdateAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"UPDATE `carsdb`.`car `SET `id` =  @id , `license_plate` =  @license_plate , `car_type` =  @car_type , `fourdb` =  @fourdb ,`engine_capacity` =  @engine_capacity ,`manufacture_year` =  @manufacture_year ,`notes` =  @notes ,`employee` =  @employee ,`car_care_date` =  @car_care_date ,`edit_date` =  @edit_date  WHERE  `id` = @id;";
+            cmd.CommandText = SqlQuerys.UpdateCar;
             BindParams(cmd);
             BindId(cmd);
+            await cmd.ExecuteNonQueryAsync();
+            //add car type to car type table
+            cmd.CommandText = SqlQuerys.InsertNewCarType;
+            BindTypeParam(cmd);
             await cmd.ExecuteNonQueryAsync();
         }
 
         public async Task DeleteAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
-            cmd.CommandText = @"DELETE FROM `carsdb`.`car` WHERE `id` = @id;";
+            cmd.CommandText = SqlQuerys.DeleteCar;
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
         }
@@ -81,66 +91,74 @@ namespace CarsMangment.Model
             {
                 ParameterName = "@id",
                 DbType = DbType.Int32,
-                Value = Id,
+                Value = this.Id,
             });
         }
-
+        private void BindTypeParam(MySqlCommand cmd)
+        {
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@type_name",
+                DbType = DbType.String,
+                Value = this.CarType,
+            });
+        }
         private void BindParams(MySqlCommand cmd)
         {
 
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@license_plate",
-                DbType = DbType.Int32,
-                Value = License_plate,
+                DbType = DbType.String,
+                Value = this.LicensePlate,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@car_type",
                 DbType = DbType.Int16,
-                Value = car_type_id,
+                Value = this.carTypeId,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@fourdb",
                 DbType = DbType.String,
-                Value = Fourdb,
+                Value = this.Fourdb,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@engine_capacity",
                 DbType = DbType.Int16,
-                Value = Engine_capacity,
+                Value = this.EngineCapacity,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@manufacture_year",
                 DbType = DbType.Int16,
-                Value = Manufacture_year,
+                Value = this.ManufactureYear,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@notes",
                 DbType = DbType.String,
-                Value = Notes,
+                Value = this.Notes,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@employee",
                 DbType = DbType.Int16,
-                Value = car_employee_id,
+                Value = this.carEmployeeId,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@car_care_date",
                 DbType = DbType.DateTime,
-                Value = Car_care_date,
+                Value = this.CarCareDate,
             });
             cmd.Parameters.Add(new MySqlParameter
             {
                 ParameterName = "@edit_date",
                 DbType = DbType.DateTime,
-                Value = Edit_date,
+                Value = this.EditDate,
             });
 
         }

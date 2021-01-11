@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 
+/**
+ * Used //https://mysqlconnector.net/tutorials/net-core-mvc/
+ * For mysql querys.
+ */
 
-//https://mysqlconnector.net/tutorials/net-core-mvc/
 namespace CarsMangment.Controllers
 {
     [EnableCors("ApiCorsPolicy")]
@@ -54,6 +57,7 @@ namespace CarsMangment.Controllers
             return new OkObjectResult(result);
         }
 
+
         // GET api/cars/AZ123
         [HttpGet("{license_plate}")]
         public async Task<IActionResult> GetOneCar(string license_plate)
@@ -72,7 +76,15 @@ namespace CarsMangment.Controllers
         public async Task<IActionResult> AddCar([FromBody] Car body)
         {
             Console.WriteLine("Controller: Post add new car");
+            Console.WriteLine("Car licens:" + body.LicensePlate);
+            Console.WriteLine("Car manifactory:" + body.ManufactureYear);
+
             await Db.Connection.OpenAsync();
+            //check if already in database - if so, return.
+            var query = new DatabaseQuery(Db);
+            var result = await query.FindOneCarAsync(body.LicensePlate);
+            if (result !=  null)
+                return new OkObjectResult(body);
             body.Db = Db;
             await body.InsertAsync();
             return new OkObjectResult(body);

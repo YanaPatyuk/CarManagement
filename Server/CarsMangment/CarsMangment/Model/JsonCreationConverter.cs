@@ -5,12 +5,7 @@ using System.Threading.Tasks;
 
 namespace CarsMangment.Model
 {
-    public class Car_Type
+    public class JsonCreationConverter
     {
-        public int ID { get; set; }
-
-        public string Type_name { get; set; }
-
-
     }
 }
