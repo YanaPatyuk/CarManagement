@@ -9,13 +9,25 @@ namespace CarsMangment.Const
     {
         public static readonly string GetAllCarsBaseInfo = @"select c.license_plate, t.type_name,c.engine_capacity, c.fourdb, e.first_name, e.last_name
                                             from car c, car_type t, employee e
-                                            where(c.employee = e.id) and(c.car_type = t.id);";
-        public static readonly string GetFullCarInfoByLicense = @"select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, e.first_name, e.last_name, t.id as 'type_id', t.type_name
-                                                           from car c, car_type t, employee e
-                                                           where( c.employee = e.id) and (c.car_type = t.id) and @license_plate = c.license_plate;";
-        public static readonly string GetFullCarInfoById = @"select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, e.first_name, e.last_name, t.id as 'type_id', t.type_name
-                                                           from car c, car_type t, employee e
-                                                           where( c.employee = e.id) and (c.car_type = t.id) and @id = c.id;";
+                                            where(c.employee = e.id) and(c.car_type = t.id)
+                                            union
+                                            select c.license_plate, t.type_name,c.engine_capacity, c.fourdb, null as 'fist_name', null as 'last_name'
+                                            from `carsdb`.`car` c, `carsdb`.`car_type` t
+                                            where(c.employee is null) and (c.car_type = t.id);";
+
+        public static readonly string GetFullCarInfoByLicense = @"select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, e.first_name, e.last_name, t.id as 'type_id', t.type_name                                            from car c, car_type t, employee e
+                                            where(c.employee = e.id) and(c.car_type = t.id) and (c.license_plate=@license_plate)
+                                            union
+                                           select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, null as 'fist_name', null as 'last_name', t.id as 'type_id', t.type_name
+                                            from `carsdb`.`car` c, `carsdb`.`car_type` t
+                                            where(c.employee is null) and (c.car_type = t.id) and (c.license_plate=@license_plate);";
+
+        public static readonly string GetFullCarInfoById = @"select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, e.first_name, e.last_name, t.id as 'type_id', t.type_name                                            from car c, car_type t, employee e
+                                            where(c.employee = e.id) and(c.car_type = t.id) and (c.id=@id)
+                                            union
+                                            select c.id, c.license_plate, c.fourdb, c.engine_capacity, c.manufacture_year, c.notes, c.car_care_date, c.edit_date, c.employee, null as 'fist_name', null as 'last_name', t.id as 'type_id', t.type_name
+                                            from `carsdb`.`car` c, `carsdb`.`car_type` t
+                                            where(c.employee is null) and (c.car_type = t.id) and (c.id=@id);";
 
 
 
@@ -27,6 +39,7 @@ namespace CarsMangment.Const
                                                           SELECT * FROM (SELECT @type_name) AS tmp
                                                           WHERE NOT EXISTS (
                                                           SELECT id FROM car_type WHERE type_name = @type_name) LIMIT 1;";
+        public static readonly string GetTypeID = @"SELECT id FROM  `carsdb`.`car_type` WHERE type_name = @type_name;";
         public static readonly string GetCarType = @"";
         public static readonly string GetAllCarTypes = @"SELECT * FROM `carsdb`.`car_type`;";
 

@@ -1,14 +1,19 @@
 ﻿using CarsMangment.Const;
+using Microsoft.AspNetCore.Mvc;
 using MySqlConnector;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace CarsMangment.Model
 {
-    public class Car : BaseCar
+    [BindProperties(SupportsGet = true)]
+
+    public class Car 
     {
         public int ?Id { get; set; }
         public int ManufactureYear { get; set; }
@@ -17,10 +22,16 @@ namespace CarsMangment.Model
         public DateTime EditDate { get; set; }
         public int ?carTypeId { get; set; }
         public int ?carEmployeeId { get; set; }
+        public string LicensePlate { get; set; }
+        public string CarType { get; set; }
+        public bool Fourdb { get; set; }
+        public int ?EngineCapacity { get; set; }
+        public string ?EmployeeFirstName { get; set; }
+        public string ?EmployeeLastName { get; set; }
 
 
         //datebase connection
-        internal Database Db { get; set; }
+        internal Database ?Db { get; set; }
 
 
         public Car()
@@ -58,10 +69,6 @@ namespace CarsMangment.Model
             BindParams(cmd);
             await cmd.ExecuteNonQueryAsync();
             Id = (int)cmd.LastInsertedId;
-            //add car type to car type table
-            cmd.CommandText = SqlQuerys.InsertNewCarType;
-            BindTypeParam(cmd);
-            await cmd.ExecuteNonQueryAsync();
         }
 
         public async Task UpdateAsync()
@@ -71,10 +78,6 @@ namespace CarsMangment.Model
             BindParams(cmd);
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
-            //add car type to car type table
-            cmd.CommandText = SqlQuerys.InsertNewCarType;
-            BindTypeParam(cmd);
-            await cmd.ExecuteNonQueryAsync();
         }
 
         public async Task DeleteAsync()
@@ -83,6 +86,11 @@ namespace CarsMangment.Model
             cmd.CommandText = SqlQuerys.DeleteCar;
             BindId(cmd);
             await cmd.ExecuteNonQueryAsync();
+        }
+
+        public static explicit operator Car(JObject v)
+        {
+            throw new NotImplementedException();
         }
 
         private void BindId(MySqlCommand cmd)

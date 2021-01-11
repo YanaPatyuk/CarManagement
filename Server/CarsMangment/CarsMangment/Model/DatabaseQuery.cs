@@ -84,14 +84,20 @@ namespace CarsMangment.Model
             {
                 while (await reader.ReadAsync())
                 {
+                    int colIndex = reader.GetOrdinal("first_name");
+                    string first_name = reader.IsDBNull(colIndex) ?string.Empty : reader.GetString(4);
+                    colIndex = reader.GetOrdinal("last_name");
+                    string last_name = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(5);
+                    colIndex = reader.GetOrdinal("engine_capacity");
+                    int engine_capacity = reader.IsDBNull(colIndex) ? 0 : reader.GetInt32(2);
                     var post = new BaseCar()
                     {
                         LicensePlate = reader.GetString(0),
                         CarType = reader.GetString(1),
-                        EngineCapacity = reader.GetInt32(2),
+                        EngineCapacity = engine_capacity,
                         Fourdb = reader.GetBoolean(3),
-                        EmployeeFirstName = reader.GetString(4),
-                        EmployeeLastName = reader.GetString(5)
+                        EmployeeFirstName = first_name,
+                        EmployeeLastName = last_name
                     };
                     posts.Add(post);
                 }
@@ -127,7 +133,43 @@ namespace CarsMangment.Model
             return result.Count > 0 ? result[0] : null;
         }
 
+        public async Task<int> GetTypeID(string type_name)
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            //add car type to car type table
+            cmd.CommandText = SqlQuerys.InsertNewCarType;
+            BindTypeParam(cmd, type_name);
+            await cmd.ExecuteNonQueryAsync();
+            //get the car type id
+            cmd.CommandText = SqlQuerys.GetTypeID;
+            var result = await ReadCarTypeIdAsync(await cmd.ExecuteReaderAsync());
+            return result;
 
+        }
+
+
+        private void BindTypeParam(MySqlCommand cmd, string name)
+        {
+            cmd.Parameters.Add(new MySqlParameter
+            {
+                ParameterName = "@type_name",
+                DbType = DbType.String,
+                Value = name,
+            });
+        }
+
+        private async Task<int> ReadCarTypeIdAsync(DbDataReader reader)
+        {
+            int id = -1;
+            using (reader)
+            {
+                while (await reader.ReadAsync())
+                {
+                    id = reader.GetInt16(0);
+                }
+            }
+            return id;
+        }
 
         private async Task<List<Car>> ReadFullCarsAsync(DbDataReader reader)
         {
@@ -136,19 +178,30 @@ namespace CarsMangment.Model
             {
                 while (await reader.ReadAsync())
                 {
+                    int colIndex = reader.GetOrdinal("first_name");
+                    string first_name = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(9);
+                    colIndex = reader.GetOrdinal("last_name");
+                    string last_name = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(10);
+                    colIndex = reader.GetOrdinal("notes");
+                    string notes = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(5);
+                    colIndex = reader.GetOrdinal("employee");
+                    int employee_id = reader.IsDBNull(colIndex) ? 0 : reader.GetInt32(8);
+                    colIndex = reader.GetOrdinal("engine_capacity");
+                    int engine_capacity = reader.IsDBNull(colIndex) ? 0: reader.GetInt32(3);
+
                     var post = new Car(Db)
                     {
                         Id = reader.GetInt32(0),
                         LicensePlate = reader.GetString(1),
                         Fourdb = reader.GetBoolean(2),
-                        EngineCapacity = reader.GetInt32(3),
+                        EngineCapacity = engine_capacity,
                         ManufactureYear = reader.GetInt32(4),
-                        Notes = reader.GetString(5),
+                        Notes = notes,
                         CarCareDate = reader.GetDateTime(6),
                         EditDate = reader.GetDateTime(7),
-                        carEmployeeId = reader.GetInt32(8),
-                        EmployeeFirstName = reader.GetString(9),
-                        EmployeeLastName = reader.GetString(10),
+                        carEmployeeId = employee_id,
+                        EmployeeFirstName = first_name,
+                        EmployeeLastName = last_name,
                         carTypeId = reader.GetInt32(11),
                         CarType = reader.GetString(12),
                     };

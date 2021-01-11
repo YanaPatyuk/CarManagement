@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using CarsMangment.Model;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
-
+using Newtonsoft.Json.Linq;
 
 /**
  * Used //https://mysqlconnector.net/tutorials/net-core-mvc/
@@ -85,9 +85,18 @@ namespace CarsMangment.Controllers
             var result = await query.FindOneCarAsync(body.LicensePlate);
             if (result !=  null)
                 return new OkObjectResult(body);
+            //insert type id to list if needed and return its id
+            int type_id = await query.GetTypeID(body.CarType);
+            body.carTypeId = type_id;
+            //add to db
             body.Db = Db;
             await body.InsertAsync();
             return new OkObjectResult(body);
+        }
+
+        private Car Car(JObject jo)
+        {
+            throw new NotImplementedException();
         }
 
         // PUT api/cars/5

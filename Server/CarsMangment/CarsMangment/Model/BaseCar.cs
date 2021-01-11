@@ -10,8 +10,8 @@ namespace CarsMangment.Model
         public string LicensePlate { get; set; }
         public string CarType { get; set; }
         public bool Fourdb { get; set; }
-        public int? EngineCapacity { get; set; }
-        public string? EmployeeFirstName { get; set; }
-        public string? EmployeeLastName { get; set; }
+        public int ?EngineCapacity { get; set; }
+        public string ?EmployeeFirstName { get; set; }
+        public string ?EmployeeLastName { get; set; }
     }
 }

@@ -7,14 +7,14 @@
         <div class="row">
             <div class="col-md-4 col-xs-4 col-sm-4">
                 <div class="form-group">
-                    <label for="licencePlate" class="required">licence Plate</label>
-                    <input class="form-control" type="text" id="licencePlate" formControlName="licencePlate"
-                        placeholder="Licence Plate:example:ABS123">
+                    <label for="licensePlate" class="required">license Plate</label>
+                    <input class="form-control" type="text" id="licensePlate" formControlName="licensePlate"
+                        placeholder="license Plate:example:ABS123">
                 </div>
-                <div *ngIf="addCarForm.controls['licencePlate'].invalid && (addCarForm.controls['licencePlate'].dirty || addCarForm.controls['licencePlate'].touched)"
+                <div *ngIf="addCarForm.controls['licensePlate'].invalid && (addCarForm.controls['licensePlate'].dirty || addCarForm.controls['licensePlate'].touched)"
                     class="alert alert-danger">
-                    <div *ngIf="addCarForm.controls['licencePlate'].errors.required">
-                        Licence Plate required!
+                    <div *ngIf="addCarForm.controls['licensePlate'].errors.required">
+                        license Plate required!
                     </div>
                 </div>
             </div>
@@ -49,14 +49,14 @@
         <div class="row">
             <div class="col-md-2 col-xs-2 col-sm-2">
                 <div class="form-group">
-                    <label for="engineCapcity" class="required">engineCapcity</label>
-                    <input class="form-control" type="number" id="engineCapcity" formControlName="engineCapcity"
-                        placeholder="LengineCapcity:example:ABS123">
+                    <label for="engineCapacity" class="required">engineCapacity</label>
+                    <input class="form-control" type="number" id="engineCapacity" formControlName="engineCapacity"
+                        placeholder="LengineCapacity:example:ABS123">
                 </div>
-                <div *ngIf="addCarForm.controls['engineCapcity'].invalid && (addCarForm.controls['engineCapcity'].dirty || addCarForm.controls['engineCapcity'].touched)"
+                <div *ngIf="addCarForm.controls['engineCapacity'].invalid && (addCarForm.controls['engineCapacity'].dirty || addCarForm.controls['engineCapacity'].touched)"
                     class="alert alert-danger">
-                    <div *ngIf="addCarForm.controls['engineCapcity'].errors.required">
-                        engineCapcity required!
+                    <div *ngIf="addCarForm.controls['engineCapacity'].errors.required">
+                        engineCapacity required!
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Base_car } from '../interfaces/base_car';
 import { Car } from '../interfaces/car';
@@ -18,8 +18,10 @@ export class CarService {
   }
   //add new car to server
   addCar(car: Car){
-    console.log(car);
-    return this.http.post(this._baseURL + "/AddCar",  car);
+    console.log(JSON.stringify(car));
+    const headers = new HttpHeaders().set('Content-Type','application/json');
+
+    return this.http.post(this._baseURL + "/AddCar",JSON.stringify(car),{headers:headers});
   }
   //update guven car in server
   updateCar(car: Car){

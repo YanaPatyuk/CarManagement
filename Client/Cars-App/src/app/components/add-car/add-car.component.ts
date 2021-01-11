@@ -20,10 +20,10 @@ export class AddCarComponent implements OnInit {
   ngOnInit(): void {
     //create the forms
     this.addCarForm = this.fb.group({
-      licencePlate:[null, Validators.required],
+      licensePlate:[null, Validators.required],
       carType:[null, Validators.required],
       fourdb:[null, Validators.required],
-      engineCapcity:[null, Validators.compose([Validators.min(500), Validators.max(3500)])],//tank?
+      engineCapacity:[null, Validators.compose([Validators.min(500), Validators.max(3500)])],//tank?
       manufactureYear:[null, Validators.compose([Validators.required,  Validators.min(1900), Validators.max(2021)])],
       notes:[null],
       carEmployeeId:[null],
