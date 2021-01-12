@@ -16,20 +16,32 @@ export class CarService {
   getAllCars() {
     return this.http.get<Base_car[]>(this._baseURL);
   }
+
   //add new car to server
   addCar(car: Car){
-    console.log(JSON.stringify(car));
+    //set the data type which sent to server
     const headers = new HttpHeaders().set('Content-Type','application/json');
-
     return this.http.post(this._baseURL + "/AddCar",JSON.stringify(car),{headers:headers});
   }
-  //update guven car in server
+
+  //update given car in server by id
   updateCar(car: Car){
-    return this.http.put(this._baseURL + "/" + car.id, car);
+        //set the data type which sent to server
+        const headers = new HttpHeaders().set('Content-Type','application/json');
+        return this.http.put(this._baseURL + "/" +car.id,JSON.stringify(car),{headers:headers});
   }
 
+  //get list of employees in company
   getAllEmployes(){
     return this.http.get<Employee[]>(this._baseURL +"/Employees");
+  }
+  //get full data car by license plate
+  getOneCar(car_licanese: string){
+    return this.http.get<Car>(this._baseURL+"/"+car_licanese);
+  }
+
+  deleteCar(id:number){
+    return this.http.delete(this._baseURL+"/"+id);
   }
 }
 

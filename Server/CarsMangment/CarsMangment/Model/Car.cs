@@ -58,6 +58,8 @@ namespace CarsMangment.Model
             this.EditDate = other.EditDate;
             this.carEmployeeId = other.carEmployeeId;
             this.carTypeId = other.carTypeId;
+
+            this.Db = other.Db;
         }
 
 

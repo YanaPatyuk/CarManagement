@@ -33,7 +33,7 @@ namespace CarsMangment.Const
 
         public static readonly string InsertNewCar = @"INSERT INTO `carsdb`.`car` (`license_plate`,`car_type`,`fourdb`,`engine_capacity`,`manufacture_year`,`notes`,`employee`,`car_care_date`,`edit_date`) VALUES (@license_plate ,@car_type ,@fourdb ,@engine_capacity ,@manufacture_year ,@notes ,@employee ,@car_care_date ,@edit_date );";
         public static readonly string DeleteCar = @"DELETE FROM `carsdb`.`car` WHERE `id` = @id;";
-        public static readonly string UpdateCar = @"UPDATE `carsdb`.`car `SET `id` =  @id , `license_plate` =  @license_plate , `car_type` =  @car_type , `fourdb` =  @fourdb ,`engine_capacity` =  @engine_capacity ,`manufacture_year` =  @manufacture_year ,`notes` =  @notes ,`employee` =  @employee ,`car_care_date` =  @car_care_date ,`edit_date` =  @edit_date  WHERE  `id` = @id;";
+        public static readonly string UpdateCar = @"UPDATE `carsdb`.`car` SET `id` =  @id , `license_plate` =  @license_plate , `car_type` =  @car_type , `fourdb` =  @fourdb ,`engine_capacity` =  @engine_capacity ,`manufacture_year` =  @manufacture_year ,`notes` =  @notes ,`employee` =  @employee ,`car_care_date` =  @car_care_date ,`edit_date` =  @edit_date  WHERE  `id` = @id;";
 
         public static readonly string InsertNewCarType = @"INSERT INTO `carsdb`.`car_type` (type_name)
                                                           SELECT * FROM (SELECT @type_name) AS tmp

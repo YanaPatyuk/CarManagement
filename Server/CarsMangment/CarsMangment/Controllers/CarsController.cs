@@ -75,29 +75,22 @@ namespace CarsMangment.Controllers
         [HttpPost("AddCar")]
         public async Task<IActionResult> AddCar([FromBody] Car body)
         {
-            Console.WriteLine("Controller: Post add new car");
-            Console.WriteLine("Car licens:" + body.LicensePlate);
-            Console.WriteLine("Car manifactory:" + body.ManufactureYear);
-
+            Console.WriteLine("Controller: Add car with license plate:" + body.LicensePlate);
             await Db.Connection.OpenAsync();
             //check if already in database - if so, return.
             var query = new DatabaseQuery(Db);
             var result = await query.FindOneCarAsync(body.LicensePlate);
-            if (result !=  null)
-                return new OkObjectResult(body);
+            if (result != null)
+                return Content("{\"status\":\"Error License plate in DB!\"}");
             //insert type id to list if needed and return its id
             int type_id = await query.GetTypeID(body.CarType);
             body.carTypeId = type_id;
             //add to db
             body.Db = Db;
             await body.InsertAsync();
-            return new OkObjectResult(body);
+            return Content("{\"status\":\"OK\"}");
         }
 
-        private Car Car(JObject jo)
-        {
-            throw new NotImplementedException();
-        }
 
         // PUT api/cars/5
         [HttpPut("{id}")]
@@ -109,9 +102,19 @@ namespace CarsMangment.Controllers
             var result = await query.FindOneCarAsync(id);
             if (result is null)
                 return new NotFoundResult();
+            //check if new licenace is in database - if so, return.
+            result = await query.FindOneCarAsync(body.LicensePlate);
+            if (result != null)
+                return Content("{\"status\":\"Error License plate in DB!\"}");
+
+            //insert type id to list if needed and return the id of updated type
+            int type_id = await query.GetTypeID(body.CarType);
+            body.carTypeId = type_id;
+            body.Db = Db;
+            //copy and update.
             result.Copy(body);
             await result.UpdateAsync();
-            return new OkObjectResult(result);
+            return new OkObjectResult("{\"status\":\"OK\"}");
         }
 
         // DELETE api/cars/5

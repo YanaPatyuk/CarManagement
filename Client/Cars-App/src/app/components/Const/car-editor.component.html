@@ -1,0 +1,112 @@
+<h1>{{title}}</h1>
+
+<div class="add-new-car">
+    <div *ngIf="showError" class="alert alert-danger" role="alert">{{errorMessage}}</div>
+
+    <form [formGroup]="editorCarForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label for="licensePlate" class="required">License Plate</label>
+                    <input class="form-control" type="text" id="licensePlate" formControlName="licensePlate"
+                        placeholder="Example:ABS123">
+                </div>
+                <div *ngIf="editorCarForm.controls['licensePlate'].invalid && (editorCarForm.controls['licensePlate'].dirty || editorCarForm.controls['licensePlate'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editorCarForm.controls['licensePlate'].errors.required">
+                        license Plate required!
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label for="carType" class="required">Car Type</label>
+                    <input class="form-control" type="text" id="carType" formControlName="carType"
+                        placeholder="Example:BMW">
+                </div>
+                <div *ngIf="editorCarForm.controls['carType'].invalid && (editorCarForm.controls['carType'].dirty || editorCarForm.controls['carType'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editorCarForm.controls['carType'].errors.required">
+                        Car Type required!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-xs-2 col-sm-2">
+                <div class="form-group">
+                    <label for="carEmployeeId">Employee:</label>
+                    <select formControlName="carEmployeeId" class="form-control" >
+                        <option disabled>Select Employee</option>
+                        <option *ngFor="let employee of employeeList" [value]="employee.id">{{employee.firstname}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-2 col-xs-2 col-sm-2">
+                <div class="form-group">
+                    <label for="engineCapacity" class="required">Engine Capacity</label>
+                    <input class="form-control" type="number" id="engineCapacity" formControlName="engineCapacity"
+                        placeholder="example:1200">
+                </div>
+                <div *ngIf="editorCarForm.controls['engineCapacity'].invalid && (editorCarForm.controls['engineCapacity'].dirty || editorCarForm.controls['engineCapacity'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editorCarForm.controls['engineCapacity'].errors.min || editorCarForm.controls['engineCapacity'].errors.min || editorCarForm.controls['engineCapacity'].errors.max">
+                        Engine Capacity can't be less then 500 or higher then 3500!
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-2 col-xs-2 col-sm-2">
+                <div class="form-group">
+                    <label for="manufactureYear" class="required">Manufacture Year</label>
+                    <input class="form-control" type="number" id="manufactureYear" formControlName="manufactureYear"
+                        placeholder="example:2015">
+                </div>
+                <div *ngIf="editorCarForm.controls['manufactureYear'].invalid && (editorCarForm.controls['manufactureYear'].dirty || editorCarForm.controls['manufactureYear'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editorCarForm.controls['manufactureYear'].errors.required ||editorCarForm.controls['manufactureYear'].errors.max">
+                        Manufacture Year can be only 1900-2021
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <label for="carCareDate">Car Care Date</label>
+                    <input type="date" class="form-control" id="carCareDate" formControlName="carCareDate">
+                </div>
+                <div *ngIf="editorCarForm.controls['carCareDate'].invalid && (editorCarForm.controls['carCareDate'].dirty || editorCarForm.controls['carCareDate'].touched)"
+                    class="alert alert-danger">
+                    <div *ngIf="editorCarForm.controls['carCareDate'].errors.required">
+                        Car's care date required!
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-6 col-xs-6 col-sm-6">
+                <div class="form-group">
+                    <label for="notes" class="required">notes</label>
+                    <textarea class="form-control" id="notes" formControlName="notes"
+                        placeholder="write notes about the car..."></textarea>
+                </div>
+            </div>
+            <div class="col-md-4 col-xs-4 col-sm-4">
+                <div class="form-group">
+                    <input class="form-check-input" type="checkbox" id="fourdb" formControlName="fourdb"
+                        placeholder="fourdb:example:ABS123">
+                    <label for="fourdb" class="required">4X4</label>
+                </div>
+            </div>
+        </div>
+
+
+
+        <button class="btn btn-success" type="submit"
+            [disabled]="editorCarForm.pristine || editorCarForm.invalid">{{buttonSubmitText}}</button>
+    </form>
+</div>

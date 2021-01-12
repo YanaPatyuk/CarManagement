@@ -1,23 +1,23 @@
-<p>show-car works!</p>
-
 <div class="car-details">
     <div class="card-body" *ngIf="car">
-        <h5 class="card-title">{{car.licensePlate}}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">ID:{{ car.id}}</h6>
+        <h1 class="card-title">Car: {{car.licensePlate}}</h1>
+        <h2 class="card-subtitle mb-2 text-muted">ID: {{ car.id}}</h2>
+        <h2>Car type: {{car.carType}}</h2>
+
         <p></p>
         <ul>
-            <li></li>
-            <li>manufactureYear : {{car.manufactureYear}}</li>
-            <li>notes: {{car.notes}}</li>
-            <li>Care date: {{car.carDareDate}}</li>
-            <li>last edit date: {{car.carEditDate}}</li>
-            <li>car type: {{car.carType}}</li>
+            <li>Manufacture Year : {{car.manufactureYear}}</li>
+            <li>Notes: {{car.notes}}</li>
+            <li>Care date: {{car.carCareDate | date : "dd/MM/yyyy"}}</li>
+            <li>last edit date: {{car.editDate| date : "dd/MM/yyyy"}}</li>
             <li>4x4: {{car.fourdb}}</li>
-            <li>engineCapacity : {{car.engineCapacity}}</li>
+            <li>Engine Capacity : {{car.engineCapacity}}</li>
             <li>Employee: {{car.employeeFirstName + " " + car.employeeLastName}}</li>
         </ul>
-        <a [routerLink]="['/cars']" class="card-link">Back</a>
-        <a [routerLink]="['/update-car',car.id]" class="card-link">Update</a>
+        <a [routerLink]="['/cars']" class="btn btn-secondary">Back</a>
+        <a [routerLink]="['/update-car',car.licensePlate]" class="btn btn-success">Update</a>
+        <a [routerLink]="['/delete-car',car.licensePlate]" class="btn btn-danger">Delete</a>
+
 
     </div>
 </div>

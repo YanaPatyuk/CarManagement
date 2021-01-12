@@ -1,5 +1,6 @@
 import { Base_car } from "./base_car";
 
+//Full Car
 export interface Car  
 {
 
@@ -9,7 +10,7 @@ export interface Car
 
     notes?: string;
 
-    carDareDate: Date;
+    carCareDate: Date;
 
     editDate: Date;
 

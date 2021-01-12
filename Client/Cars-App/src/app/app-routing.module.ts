@@ -3,17 +3,16 @@ import { Routes, RouterModule } from '@angular/router';
 import { AddCarComponent } from './components/add-car/add-car.component';
 import { CarsComponent } from './components/cars/cars.component';
 import { DeleteCarComponent } from './components/delete-car/delete-car.component';
-import { HomeComponent } from './components/home/home.component';
 import { ShowCarComponent } from './components/show-car/show-car.component';
 import { UpdateCarComponent } from './components/update-car/update-car.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, pathMatch: 'full' },
+  { path: '', component: CarsComponent, pathMatch: 'full' },
   { path: 'cars', component: CarsComponent},
   { path: 'add-car', component: AddCarComponent},
-  { path: 'update-car/:id', component: UpdateCarComponent},
-  { path: 'delete-car/:id', component: DeleteCarComponent},
-  { path: 'show-car/:licencePlate', component: ShowCarComponent}
+  { path: 'update-car/:licensePlate', component: UpdateCarComponent},
+  { path: 'delete-car/:licensePlate', component: DeleteCarComponent},
+  { path: 'show-car/:licensePlate', component: ShowCarComponent}
 ];
 
 

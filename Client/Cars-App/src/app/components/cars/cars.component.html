@@ -1,4 +1,3 @@
-<p>cars works!</p>
 <h1>Cars List</h1>
 
 
@@ -51,16 +50,18 @@
       <!-- Action Column -->
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
-        <mat-cell *matCellDef="let element" class="actionCol"> 
-            <button class="button" class="btn btn-default btn-sm" (click)="showCar(element.licensePlate)">Show</button>
+        <mat-cell *matCellDef="let element" class="actionCol">             
+            <button class="button" class="btn btn-info btn-sm" (click)="showCar(element.licensePlate)">Show</button>
+            <button [routerLink]="['/delete-car',element.licensePlate]" class="btn btn-danger btn-sm">Delete</button>
              </mat-cell>
       </ng-container>
       
   
-  
+        <!-- Data row Column -->
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row >
         <mat-row *matRowDef="let element; columns: displayedColumns;"></mat-row>
     </mat-table>
+          <!-- Pageing -->
     <mat-paginator *ngIf="dataSource" [pageSizeOptions]="[3, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 

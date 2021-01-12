@@ -6,20 +6,24 @@ import { CarService } from 'src/app/services/car.service';
 
 @Component({
   selector: 'app-add-car',
-  templateUrl: './add-car.component.html',
+  templateUrl: './../const/car-editor.component.html',
   styleUrls: ['./add-car.component.css']
 })
 export class AddCarComponent implements OnInit {
 
-  showError : boolean = false;
-  addCarForm: FormGroup;
-  selectedEmployee;
-  employeeList:any;
+  showError : boolean = false;//show error from server
+  errorMessage: string;
+  editorCarForm: FormGroup;
+  selectedEmployee;//employee chosen by user
+  employeeList:any;//employee in company
+  title: string = "Add new car!";
+  buttonSubmitText: string = "Add";
+
 
   constructor(private service: CarService, private fb:FormBuilder, private router: Router) { }
   ngOnInit(): void {
     //create the forms
-    this.addCarForm = this.fb.group({
+    this.editorCarForm = this.fb.group({
       licensePlate:[null, Validators.required],
       carType:[null, Validators.required],
       fourdb:[null, Validators.required],
@@ -31,7 +35,6 @@ export class AddCarComponent implements OnInit {
       editDate:[null]
       
     });
-    console.log(this.employeeList);
     //get employee list from server
     this.service.getAllEmployes().subscribe(data=> 
       {this.employeeList = data;console.log(data)});
@@ -39,18 +42,22 @@ export class AddCarComponent implements OnInit {
 
   onSubmit(){
     //set the current date as edit date
-    this.addCarForm.patchValue({editDate: new Date()});
+    this.editorCarForm.patchValue({editDate: new Date()});
+    //set the employee id as a number-not string
+    this.editorCarForm.patchValue({carEmployeeId:Number(this.editorCarForm.value.carEmployeeId)});
 
     //send data to server, if data accecpted, go back to list.
     //else: show error for user
-    this.service.addCar(this.addCarForm.value).subscribe(data => {
-      this.router.navigate(["/cars"]);
-    }, error=> {this.showError = true;console.log(error);})
+    this.service.addCar(this.editorCarForm.value).subscribe(data => {
+      //check if car added or already exist
+      if(data["status"]=="OK"){
+        this.showError = false;
+        this.router.navigate(["/cars"]);
+      }else{//if exist show error message
+        this.showError = true;
+        this.errorMessage=data["status"];
+      }
+    }, error=> {this.showError = true;this.errorMessage="Error in server, try again later..";console.log(error)})
   }
-
-    changeWebsite(e) {
-    console.log(e.target.value);
-  }
-
 
 }
