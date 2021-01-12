@@ -18,15 +18,15 @@ namespace CarsMangment.Model
             Db = db;
         }
 
-
+        /*Get list of all car types*/
         public async Task<List<Car_Type>> AllCarTypes()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = SqlQuerys.GetAllCarTypes;
             return await ReadAllAllCarTypesAsyn(await cmd.ExecuteReaderAsync());
         }
-
-        public async Task<List<Car_Type>> ReadAllAllCarTypesAsyn(DbDataReader reader)
+        /*Read the types return from AllCarTypes*/
+        private async Task<List<Car_Type>> ReadAllAllCarTypesAsyn(DbDataReader reader)
         {
             var posts =  new List<Car_Type>();
             using (reader)
@@ -43,15 +43,15 @@ namespace CarsMangment.Model
             }
             return posts;
         }
-
+        /*Get list of Employess*/
         public async Task<List<Employee>> AllEmployees()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = SqlQuerys.GetAllEmployees;
             return await ReadAllAllEmployeesAsyn(await cmd.ExecuteReaderAsync());
         }
-
-        public async Task<List<Employee>> ReadAllAllEmployeesAsyn(DbDataReader reader)
+        /*Read table of employees from db*/
+        private async Task<List<Employee>> ReadAllAllEmployeesAsyn(DbDataReader reader)
         {
             var posts = new List<Employee>();
             using (reader)
@@ -69,14 +69,14 @@ namespace CarsMangment.Model
             }
             return posts;
         }
-
+        /*Get list of all Cars in BaseCar type*/
         public async Task<List<BaseCar>> AllCarsAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
             cmd.CommandText = SqlQuerys.GetAllCarsBaseInfo;
             return await ReadBaseCarsAsync(await cmd.ExecuteReaderAsync());
         }
-
+        /*Read recived data from table as Basecar*/
         private async Task<List<BaseCar>> ReadBaseCarsAsync(DbDataReader reader)
         {
             var posts = new List<BaseCar>();
@@ -84,12 +84,14 @@ namespace CarsMangment.Model
             {
                 while (await reader.ReadAsync())
                 {
+                    //Thouse colume may conatin null velue. In this case, set null.
                     int colIndex = reader.GetOrdinal("first_name");
                     string first_name = reader.IsDBNull(colIndex) ?string.Empty : reader.GetString(4);
                     colIndex = reader.GetOrdinal("last_name");
                     string last_name = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(5);
                     colIndex = reader.GetOrdinal("engine_capacity");
                     int engine_capacity = reader.IsDBNull(colIndex) ? 0 : reader.GetInt32(2);
+                    //set the list
                     var post = new BaseCar()
                     {
                         LicensePlate = reader.GetString(0),
@@ -104,7 +106,7 @@ namespace CarsMangment.Model
             }
             return posts;
         }
-
+        /*Return car by license plate. if not exist return null */
         public async Task<Car> FindOneCarAsync(string license_plate)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -118,7 +120,7 @@ namespace CarsMangment.Model
             var result = await ReadFullCarsAsync(await cmd.ExecuteReaderAsync());
             return result.Count > 0 ? result[0] : null;
         }
-
+        /*Return car by  ID. if not exist return null */
         public async Task<Car> FindOneCarAsync(int id)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -132,7 +134,7 @@ namespace CarsMangment.Model
             var result = await ReadFullCarsAsync(await cmd.ExecuteReaderAsync());
             return result.Count > 0 ? result[0] : null;
         }
-
+        /*Return car type id*/
         public async Task<int> GetTypeID(string type_name)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -146,8 +148,7 @@ namespace CarsMangment.Model
             return result;
 
         }
-
-
+        /*Bind the type to command*/
         private void BindTypeParam(MySqlCommand cmd, string name)
         {
             cmd.Parameters.Add(new MySqlParameter
@@ -157,7 +158,7 @@ namespace CarsMangment.Model
                 Value = name,
             });
         }
-
+        /*Read type name and id from recived table*/
         private async Task<int> ReadCarTypeIdAsync(DbDataReader reader)
         {
             int id = -1;
@@ -170,14 +171,16 @@ namespace CarsMangment.Model
             }
             return id;
         }
-
+        /*Read recived table as Car.*/
         private async Task<List<Car>> ReadFullCarsAsync(DbDataReader reader)
         {
             var posts = new List<Car>();
             using (reader)
             {
+                //for each car returned - should be one!
                 while (await reader.ReadAsync())
                 {
+                    //Touse querys can be null, if so, set null.
                     int colIndex = reader.GetOrdinal("first_name");
                     string first_name = reader.IsDBNull(colIndex) ? string.Empty : reader.GetString(9);
                     colIndex = reader.GetOrdinal("last_name");
@@ -188,7 +191,7 @@ namespace CarsMangment.Model
                     int employee_id = reader.IsDBNull(colIndex) ? 0 : reader.GetInt32(8);
                     colIndex = reader.GetOrdinal("engine_capacity");
                     int engine_capacity = reader.IsDBNull(colIndex) ? 0: reader.GetInt32(3);
-
+                    //set current car
                     var post = new Car(Db)
                     {
                         Id = reader.GetInt32(0),

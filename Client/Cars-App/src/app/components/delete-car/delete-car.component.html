@@ -4,7 +4,7 @@
         <br>ID: {{ car.id}}
         <br >Car type: {{car.carType}}</h3>
         <h1>Are you sure you want to delete?</h1>
-        <a [routerLink]="['/cars']" class="btn">No! Back</a>
+        <a [routerLink]="['/cars']" class="btn btn-secondary">No! Back</a>
         <a (click)="deleteCar(car.id)" class="btn btn-danger">Yes! Delete</a>
     </div>
 </div>

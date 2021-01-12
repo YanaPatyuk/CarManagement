@@ -42,7 +42,9 @@ namespace CarsMangment.Model
         {
             Db = db;
         }
-
+        /*
+         * Copy car
+         */
         public void Copy(Car other)
         {
             this.Id = other.Id;
@@ -63,7 +65,9 @@ namespace CarsMangment.Model
         }
 
 
-
+        /**
+         *Insert car to db.
+         **/
         public async Task InsertAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -72,7 +76,9 @@ namespace CarsMangment.Model
             await cmd.ExecuteNonQueryAsync();
             Id = (int)cmd.LastInsertedId;
         }
-
+        /*
+         * Update car
+         */
         public async Task UpdateAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -82,6 +88,9 @@ namespace CarsMangment.Model
             await cmd.ExecuteNonQueryAsync();
         }
 
+        /*
+         * Delete car
+         */
         public async Task DeleteAsync()
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -90,11 +99,9 @@ namespace CarsMangment.Model
             await cmd.ExecuteNonQueryAsync();
         }
 
-        public static explicit operator Car(JObject v)
-        {
-            throw new NotImplementedException();
-        }
-
+        /*
+         * Bind id to query
+         */
         private void BindId(MySqlCommand cmd)
         {
             cmd.Parameters.Add(new MySqlParameter
@@ -104,6 +111,9 @@ namespace CarsMangment.Model
                 Value = this.Id,
             });
         }
+        /*
+         * Bind car type to query
+         */
         private void BindTypeParam(MySqlCommand cmd)
         {
             cmd.Parameters.Add(new MySqlParameter
@@ -113,6 +123,9 @@ namespace CarsMangment.Model
                 Value = this.CarType,
             });
         }
+        /*
+         * Bind all param to query
+         */
         private void BindParams(MySqlCommand cmd)
         {
 

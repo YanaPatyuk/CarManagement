@@ -19,13 +19,13 @@ namespace CarsMangment.Controllers
     [Route("api/[controller]")]
     public class CarsController : ControllerBase
     {
-        public Database Db { get; }
+        public Database Db { get; }//database 
 
         public CarsController(Database db)
         {
             Db = db;
         }
-        // GET api/cars/Types
+        // GET api/cars/Types - get car types - return list of types
         [HttpGet("Types")]
         public async Task<IActionResult> GetAllCarTypes()
         {
@@ -36,7 +36,7 @@ namespace CarsMangment.Controllers
 
             return new OkObjectResult(result);
         }
-        // GET api/cars/Employees
+        // GET api/cars/Employees -Return list of employees
         [HttpGet("Employees")]
         public async Task<IActionResult> GetAllEmployees()
         {
@@ -46,7 +46,7 @@ namespace CarsMangment.Controllers
             var result = await query.AllEmployees();
             return new OkObjectResult(result);
         }
-        // GET api/cars
+        // GET api/cars - Return List of base cars
         [HttpGet]
         public async Task<IActionResult> GetAllCars()
         {
@@ -58,7 +58,7 @@ namespace CarsMangment.Controllers
         }
 
 
-        // GET api/cars/AZ123
+        // GET api/cars/AZ123(example) return one car-full details
         [HttpGet("{license_plate}")]
         public async Task<IActionResult> GetOneCar(string license_plate)
         {
@@ -71,7 +71,7 @@ namespace CarsMangment.Controllers
             return new OkObjectResult(result);
         }
 
-        // POST api/cars/AddCar
+        // POST api/cars/AddCar add new car
         [HttpPost("AddCar")]
         public async Task<IActionResult> AddCar([FromBody] Car body)
         {
@@ -92,7 +92,7 @@ namespace CarsMangment.Controllers
         }
 
 
-        // PUT api/cars/5
+        // PUT api/cars/5 Update gicen car by id
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCar(int id, [FromBody] Car body)
         {
@@ -103,8 +103,8 @@ namespace CarsMangment.Controllers
             if (result is null)
                 return new NotFoundResult();
             //check if new licenace is in database - if so, return.
-            result = await query.FindOneCarAsync(body.LicensePlate);
-            if (result != null)
+            var result2 = await query.FindOneCarAsync(body.LicensePlate);
+            if ((result != null) && result2.Id != result.Id)
                 return Content("{\"status\":\"Error License plate in DB!\"}");
 
             //insert type id to list if needed and return the id of updated type
@@ -117,7 +117,7 @@ namespace CarsMangment.Controllers
             return new OkObjectResult("{\"status\":\"OK\"}");
         }
 
-        // DELETE api/cars/5
+        // DELETE api/cars/5 delete car by id
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOneCar(int id)
         {
